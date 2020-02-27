@@ -15,6 +15,14 @@ pygame.display.set_caption("Teste de Cubo")
 
 clock = pygame.time.Clock()
 
+angle = [0,0,0]
+
+center = [300,300]
+
+def setPoint():
+    for i in range(8):
+        print(i)
+
 while 1:
 
     for event in pygame.event.get():
@@ -30,7 +38,8 @@ while 1:
                  (20,20), (20,30),
                  (20,30), (10,10)]
 
-    pygame.draw.polygon(screen, (255,200,150), pointlist)
+    pygame.draw.line(screen, (255, 255, 255), center, pointlist[0] )
+#    pygame.draw.polygon(screen, (255,200,150), pointlist)
 
 
     pygame.display.flip()
