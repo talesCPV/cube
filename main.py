@@ -9,24 +9,26 @@ pygame.display.set_caption("Teste de Cubo")
 
 clock = pygame.time.Clock()
 
-angle = [0,0,0]
-raio = 10
+angle = [90,90,0]
+raio = 100
 pivot = [300,300]
-pointlist = [(10, 10), (10, 20),
+pointlist = [(0, 10), (10, 20),
              (10, 20), (20, 20),
              (20, 20), (20, 30),
              (20, 30), (10, 10)]
 
 def setPoint():
-    for i in range(8):
-        pointlist[i] = (pivot[0],getX(90))
+    saida_x = raio * math.sin(math.radians(angle[0]))
+    saida_y = raio * math.sin(math.radians(angle[1]))
+    saida_z = raio * math.sin(math.radians(angle[2]))
 
+    pointlist[0] = (pivot[0] - saida_x, pivot[1] - saida_y)
+    pointlist[1] = (pivot[0] - saida_x, pivot[1] + saida_y)
+    pointlist[2] = (pivot[0] + saida_x, pivot[1] - saida_y)
+    pointlist[3] = (pivot[0] + saida_x, pivot[1] + saida_y)
 
-def getX(angle):
-    saida =  raio * math.sin(math.radians(angle))
-    saida -= pivot[0]
-    return saida
-
+    for a in range(8):
+        print(pointlist[a])
 
 while 1:
 
@@ -36,13 +38,16 @@ while 1:
             sys.exit()
 
 #            self.clock.tick(60)
-            screen.fill((0, 0, 0)) #background
+    screen.fill((0, 0, 0)) #background
 
-    pygame.draw.line(screen, (255, 255, 255), pivot, pointlist[0] )
+    pygame.draw.line(screen, (255, 255, 255), pointlist[0], pointlist[1])
+    pygame.draw.line(screen, (255, 255, 255), pointlist[1], pointlist[3])
+    pygame.draw.line(screen, (255, 255, 255), pointlist[2], pointlist[3])
+    pygame.draw.line(screen, (255, 255, 255), pointlist[2], pointlist[0])
 #    pygame.draw.polygon(screen, (255,200,150), pointlist)
 
 
     pygame.display.flip()
 
-    print(getX(90))
+#    print(pointlist[0])
     setPoint()
