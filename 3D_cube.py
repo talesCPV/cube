@@ -73,7 +73,7 @@ class Simulation:
         self.faces = [(0, 1, 2, 3), (1, 5, 6, 2), (5, 4, 7, 6), (4, 0, 3, 7), (0, 4, 5, 1), (3, 2, 6, 7)]
 
         # Define colors for each face
-        self.colors = [(255, 0, 255), (255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255), (255, 255, 0)]
+        self.colors = [(255, 255, 255), (255, 0, 0), (255, 255, 0), (255, 130, 20), (0, 0, 255), (0, 244, 0)]
 
         self.angle = 0
 
@@ -98,6 +98,7 @@ class Simulation:
                 p = r.project(self.screen.get_width(), self.screen.get_height(), 256, 4)
                 # Put the point in the list of transformed vertices
                 t.append(p)
+                print(self.angle)
 
             # Calculate the average Z values of each face.
             avg_z = []
@@ -117,6 +118,9 @@ class Simulation:
                              (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y),
                              (t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y)]
                 pygame.draw.polygon(self.screen, self.colors[face_index], pointlist)
+
+                pygame.draw.line(self.screen, (0, 0, 0), (t[f[0]].x, t[f[0]].y), (t[f[2]].x, t[f[2]].y))
+                pygame.draw.line(self.screen, (0, 0, 0), (t[f[1]].x, t[f[1]].y), (t[f[3]].x, t[f[3]].y))
 
             self.angle += 1
 
