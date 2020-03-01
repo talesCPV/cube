@@ -15,7 +15,7 @@ class Point3D:
 
     def rotateX(self, angle):
         """ Rotates the point around the X axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
+        rad = angle[0] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
         y = self.y * cosa - self.z * sina
@@ -24,7 +24,7 @@ class Point3D:
 
     def rotateY(self, angle):
         """ Rotates the point around the Y axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
+        rad = angle[1] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
         z = self.z * cosa - self.x * sina
@@ -33,7 +33,7 @@ class Point3D:
 
     def rotateZ(self, angle):
         """ Rotates the point around the Z axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
+        rad = angle[2] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
         x = self.x * cosa - self.y * sina
@@ -58,14 +58,14 @@ class Simulation:
         self.clock = pygame.time.Clock()
 
         self.vertices = [
-            Point3D(-1, 1, -1),
-            Point3D(1, 1, -1),
-            Point3D(1, -1, -1),
+            Point3D(-1,  1, -1),
+            Point3D( 1,  1, -1),
+            Point3D( 1, -1, -1),
             Point3D(-1, -1, -1),
-            Point3D(-1, 1, 1),
-            Point3D(1, 1, 1),
-            Point3D(1, -1, 1),
-            Point3D(-1, -1, 1)
+            Point3D(-1,  1,  1),
+            Point3D( 1,  1,  1),
+            Point3D( 1, -1,  1),
+            Point3D(-1, -1,  1)
         ]
 
         # Define the vertices that compose each of the 6 faces. These numbers are
@@ -75,7 +75,8 @@ class Simulation:
         # Define colors for each face
         self.colors = [(255, 255, 255), (255, 0, 0), (255, 255, 0), (255, 130, 20), (0, 0, 255), (0, 244, 0)]
 
-        self.angle = 0
+#        self.angle = 0
+        self.angle = [0,0,45]
 
     def run(self):
         """ Main Loop """
@@ -95,10 +96,10 @@ class Simulation:
                 # Rotate the point around X axis, then around Y axis, and finally around Z axis.
                 r = v.rotateX(self.angle).rotateY(self.angle).rotateZ(self.angle)
                 # Transform the point from 3D to 2D
-                p = r.project(self.screen.get_width(), self.screen.get_height(), 256, 4)
+                p = r.project(self.screen.get_width(), self.screen.get_height(), 400, 4)
                 # Put the point in the list of transformed vertices
                 t.append(p)
-                print(self.angle)
+                print(r)
 
             # Calculate the average Z values of each face.
             avg_z = []
@@ -113,16 +114,14 @@ class Simulation:
             for tmp in sorted(avg_z, key=itemgetter(1), reverse=True):
                 face_index = tmp[0]
                 f = self.faces[face_index]
-                pointlist = [(t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y),
-                             (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y),
-                             (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y),
-                             (t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y)]
-                pygame.draw.polygon(self.screen, self.colors[face_index], pointlist)
 
-                pygame.draw.line(self.screen, (0, 0, 0), (t[f[0]].x, t[f[0]].y), (t[f[2]].x, t[f[2]].y))
-                pygame.draw.line(self.screen, (0, 0, 0), (t[f[1]].x, t[f[1]].y), (t[f[3]].x, t[f[3]].y))
+                pygame.draw.line(self.screen, (255, 0, 0), (t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
+                pygame.draw.line(self.screen, (255, 0, 0), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
+                pygame.draw.line(self.screen, (255, 0, 0), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
 
-            self.angle += 1
+            self.angle[0] += 1
+            self.angle[1] += 1
+#            self.angle[2] += 1
 
             pygame.display.flip()
 
