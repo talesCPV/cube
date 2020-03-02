@@ -72,11 +72,8 @@ class Simulation:
         # indices to the vertices list defined above.
         self.faces = [(0, 1, 2, 3), (1, 5, 6, 2), (5, 4, 7, 6), (4, 0, 3, 7), (0, 4, 5, 1), (3, 2, 6, 7)]
 
-        # Define colors for each face
-        self.colors = [(255, 255, 255), (255, 0, 0), (255, 255, 0), (255, 130, 20), (0, 0, 255), (0, 244, 0)]
-
 #        self.angle = 0
-        self.angle = [0,0,45]
+        self.angle = [0,0,90]
 
     def run(self):
         """ Main Loop """
@@ -99,7 +96,10 @@ class Simulation:
                 p = r.project(self.screen.get_width(), self.screen.get_height(), 400, 4)
                 # Put the point in the list of transformed vertices
                 t.append(p)
-                print(r)
+                print(r.x,r.y,r.z)
+#                print(v.rotateX(self.angle).x,v.rotateX(self.angle).y,v.rotateX(self.angle).z)
+#                print(v.rotateY(self.angle).x,v.rotateY(self.angle).y,v.rotateY(self.angle).z)
+#                print(v.rotateZ(self.angle).x,v.rotateZ(self.angle).y,v.rotateZ(self.angle).z)
 
             # Calculate the average Z values of each face.
             avg_z = []
@@ -119,8 +119,8 @@ class Simulation:
                 pygame.draw.line(self.screen, (255, 0, 0), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
                 pygame.draw.line(self.screen, (255, 0, 0), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
 
-            self.angle[0] += 1
-            self.angle[1] += 1
+#            self.angle[0] += 1
+#            self.angle[1] += 1
 #            self.angle[2] += 1
 
             pygame.display.flip()
