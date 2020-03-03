@@ -18,8 +18,10 @@ class Point3D:
         rad = angle[0] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
+#        print('antes X', (self.x,self.y,self.z))
         y = self.y * cosa - self.z * sina
         z = self.y * sina + self.z * cosa
+#       print('depois X', (self.x,y,z))
         return Point3D(self.x, y, z)
 
     def rotateY(self, angle):
@@ -27,8 +29,10 @@ class Point3D:
         rad = angle[1] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
+#        print('antes Y', (self.x,self.y,self.z))
         z = self.z * cosa - self.x * sina
         x = self.z * sina + self.x * cosa
+#        print('depois Y', (x,self.y,z))
         return Point3D(x, self.y, z)
 
     def rotateZ(self, angle):
@@ -36,8 +40,10 @@ class Point3D:
         rad = angle[2] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
+        print('antes Z', (self.x,self.y,self.z))
         x = self.x * cosa - self.y * sina
         y = self.x * sina + self.y * cosa
+        print('depois Z', (x,y,self.z))
         return Point3D(x, y, self.z)
 
     def project(self, win_width, win_height, fov, viewer_distance):
@@ -68,12 +74,13 @@ class Simulation:
             Point3D(-1, -1,  1)
         ]
 
+
         # Define the vertices that compose each of the 6 faces. These numbers are
         # indices to the vertices list defined above.
         self.faces = [(0, 1, 2, 3), (1, 5, 6, 2), (5, 4, 7, 6), (4, 0, 3, 7), (0, 4, 5, 1), (3, 2, 6, 7)]
 
 #        self.angle = 0
-        self.angle = [0,0,90]
+        self.angle = [90,0,0]
 
     def run(self):
         """ Main Loop """
@@ -96,7 +103,7 @@ class Simulation:
                 p = r.project(self.screen.get_width(), self.screen.get_height(), 400, 4)
                 # Put the point in the list of transformed vertices
                 t.append(p)
-                print(r.x,r.y,r.z)
+#                print(r.x,r.y,r.z)
 #                print(v.rotateX(self.angle).x,v.rotateX(self.angle).y,v.rotateX(self.angle).z)
 #                print(v.rotateY(self.angle).x,v.rotateY(self.angle).y,v.rotateY(self.angle).z)
 #                print(v.rotateZ(self.angle).x,v.rotateZ(self.angle).y,v.rotateZ(self.angle).z)

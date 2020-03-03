@@ -10,46 +10,27 @@ pygame.display.set_caption("Teste de Cubo")
 clock = pygame.time.Clock()
 
 vai = 0
-#         X  Y  Z
-angle = [0,45,0]
+#        X  Y  Z
+angle = [90,40,10]
+pontos3D = [(1,1,1),(1,1,-1),(1,-1,1),(1,-1,-1),(-1,1,1),(-1,1,-1),(-1,-1,1),(-1,-1,-1)]
 raio = 100
 pivot = [300,300]
 
 
-def getAxis(x,y,z):
-    points = []
+def plot3DPoint(ang,point):
+    senX = math.sin(ang[0] * math.pi / 180 )
+    cosX = math.cos(ang[0] * math.pi / 180 )
+    senY = math.sin(ang[1] * math.pi / 180 )
+    cosY = math.cos(ang[1] * math.pi / 180 )
+    senZ = math.sin(ang[2] * math.pi / 180 )
+    cosZ = math.cos(ang[2] * math.pi / 180 )
 
+    X = (point[2] * senY + point[0] * cosY) * cosZ - point[1] * senZ
+    Y = point[0] * senZ + (point[1] * cosX - point[2] * senX) * cosZ
+    Z = (point[1] * senX + point[2] * cosX) * cosY - point[0] * senY
 
+    return (X,Y,Z)
 
-
-
-
-
-def setPoint():
-
-#    GIRO
-#    angle[0] += 1 # X
-#    angle[1] += 1 # Y
-#    angle[2] += 1 # Z
-
-    sen_x = math.sin(math.radians(angle[0]))
-    cos_x = math.cos(math.radians(angle[0]))
-
-    sen_y = math.sin(math.radians(angle[1]))
-    cos_y = math.cos(math.radians(angle[1]))
-
-    sen_z = math.sin(math.radians(angle[2]))
-    cos_z = math.cos(math.radians(angle[2]))
-
-
-
-#                 X             Y             Z
-    axis = [((0,0),(0,0)),((0,0),(0,0)),((0,0),(0,0))]
-
-    # DRAW
-    pygame.draw.line(screen, (255, 255, 255), axis[0]
-    pygame.draw.line(screen, (255, 255, 255), axis[1]
-    pygame.draw.line(screen, (255, 255, 255), axis[2]
 
 while 1:
 
@@ -61,8 +42,9 @@ while 1:
     clock.tick(40)
     screen.fill((0, 0, 0)) #background
 
+    for i in pontos3D:
+        print(plot3DPoint(angle,i))
 
-    setPoint()
 #center
     pygame.draw.line(screen, (255, 0, 0), pivot, pivot)
 
