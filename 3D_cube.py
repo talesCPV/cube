@@ -40,17 +40,19 @@ class Point3D:
         rad = angle[2] * math.pi / 180
         cosa = math.cos(rad)
         sina = math.sin(rad)
-        print('antes Z', (self.x,self.y,self.z))
+#        print('antes Z', (self.x,self.y,self.z))
         x = self.x * cosa - self.y * sina
         y = self.x * sina + self.y * cosa
-        print('depois Z', (x,y,self.z))
+#        print('depois Z', (x,y,self.z))
         return Point3D(x, y, self.z)
 
     def project(self, win_width, win_height, fov, viewer_distance):
         """ Transforms this 3D point to 2D using a perspective projection. """
+        print('antes ', (self.x,self.y,self.z))
         factor = fov / (viewer_distance + self.z)
         x = self.x * factor + win_width / 2
         y = -self.y * factor + win_height / 2
+        print('project Z', (x,y,self.z))
         return Point3D(x, y, self.z)
 
 
