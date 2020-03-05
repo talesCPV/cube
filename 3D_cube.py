@@ -48,11 +48,11 @@ class Point3D:
 
     def project(self, win_width, win_height, fov, viewer_distance):
         """ Transforms this 3D point to 2D using a perspective projection. """
-        print('antes ', (self.x,self.y,self.z))
+#        print('antes ', (self.x,self.y,self.z))
         factor = fov / (viewer_distance + self.z)
         x = self.x * factor + win_width / 2
         y = -self.y * factor + win_height / 2
-        print('project Z', (x,y,self.z))
+#        print('project Z', (x,y,self.z))
         return Point3D(x, y, self.z)
 
 
@@ -105,31 +105,32 @@ class Simulation:
                 p = r.project(self.screen.get_width(), self.screen.get_height(), 400, 4)
                 # Put the point in the list of transformed vertices
                 t.append(p)
-#                print(r.x,r.y,r.z)
-#                print(v.rotateX(self.angle).x,v.rotateX(self.angle).y,v.rotateX(self.angle).z)
-#                print(v.rotateY(self.angle).x,v.rotateY(self.angle).y,v.rotateY(self.angle).z)
-#                print(v.rotateZ(self.angle).x,v.rotateZ(self.angle).y,v.rotateZ(self.angle).z)
 
             # Calculate the average Z values of each face.
-            avg_z = []
-            i = 0
-            for f in self.faces:
-                z = (t[f[0]].z + t[f[1]].z + t[f[2]].z + t[f[3]].z) / 4.0
-                avg_z.append([i, z])
-                i = i + 1
+#            avg_z = []
+#            i = 0
+#            for f in self.faces:
+#                z = (t[f[0]].z + t[f[1]].z + t[f[2]].z + t[f[3]].z) / 4.0
+#                avg_z.append([i, z])
+#                i = i + 1
+
+#            print(avg_z)
 
             # Draw the faces using the Painter's algorithm:
             # Distant faces are drawn before the closer ones.
-            for tmp in sorted(avg_z, key=itemgetter(1), reverse=True):
-                face_index = tmp[0]
-                f = self.faces[face_index]
+  #          for tmp in sorted(avg_z, key=itemgetter(1), reverse=True):
+  #              face_index = tmp[0]
+#                f = self.faces[face_index]
+
+            for i in range(6):
+                f = self.faces[i]
 
                 pygame.draw.line(self.screen, (255, 0, 0), (t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
                 pygame.draw.line(self.screen, (255, 0, 0), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
                 pygame.draw.line(self.screen, (255, 0, 0), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
 
-#            self.angle[0] += 1
-#            self.angle[1] += 1
+            self.angle[0] += 1
+            self.angle[1] += 1
 #            self.angle[2] += 1
 
             pygame.display.flip()

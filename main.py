@@ -29,6 +29,9 @@ def plot3DPoint(ang,point):
     Y = point[0] * senZ + (point[1] * cosX - point[2] * senX) * cosZ
     Z = (point[1] * senX + point[2] * cosX) * cosY - point[0] * senY
 
+    pontos.append(project((X,Y,Z),400,4))
+
+
     return (project((X,Y,Z),400,4))
 
 
@@ -52,7 +55,7 @@ while 1:
     pontos = []
 
     for i in pontos3D:
-        pontos.append(plot3DPoint(angle,i))
+        plot3DPoint(angle,i)
 
     print(pontos)
 
@@ -77,5 +80,5 @@ while 1:
     pygame.display.flip()
 
     angle[0] += 1
-#    angle[1] += 1
+    angle[1] += 1
 #    angle[2] += 1
